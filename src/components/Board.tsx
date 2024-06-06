@@ -1,13 +1,13 @@
-import { useState } from "react";
 import { calculateWinner } from "../utils";
 import Square from "./Square";
 
-export default function Board() {
-  const [xIsNext, setXIsNext] = useState(true);
-  const [squares, setSquares] = useState<(string | null)[]>(
-    Array(9).fill(null)
-  );
+interface BoardProps {
+  xIsNext: boolean;
+  squares: (string | null)[];
+  onPlay: (squares: (string | null)[]) => void;
+}
 
+export default function Board({ xIsNext, squares, onPlay }: BoardProps) {
   const winner = calculateWinner(squares);
   let status: string;
 
@@ -26,13 +26,11 @@ export default function Board() {
 
     if (xIsNext) {
       nextSquares[index] = "X";
-      setXIsNext(false);
     } else {
       nextSquares[index] = "O";
-      setXIsNext(true);
     }
 
-    setSquares(nextSquares);
+    onPlay(nextSquares);
   };
 
   return (
