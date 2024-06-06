@@ -26,7 +26,11 @@ export default function Game() {
 
     return (
       <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
+        {currentMove !== move ? (
+          <button onClick={() => jumpTo(move)}>{description}</button>
+        ) : (
+          <span className="bold">You are at move: {move}</span>
+        )}
       </li>
     );
   });
